@@ -1,3 +1,43 @@
+#dropdown_beers {
+  width: 40vw;
+  margin: 0vh 30vw;
+}
+
+#dropdown_beers option {
+  width: 100%
+}
+
+#beer_details {
+  width: 40vw;
+  margin: 0vh 30vw;
+}
+
+#beer_details div p {
+  text-transform: uppercase;
+}
+
+#beer_details div div p {
+  text-align: center;
+}
+
 .beer_image {
-  width: 20vw;
+  width: 30%;
+  margin: 0 45% 0 25%;
+}
+
+.ingredients {
+  margin: auto;
+  margin-top: 5vh;
+  display: flex;
+  height: 20vh;
+  width: 80vw;
+  justify-content: space-between;
+}
+
+.title {
+  width: 40%;
+  margin: auto;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
 }

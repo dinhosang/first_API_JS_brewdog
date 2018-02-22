@@ -40,11 +40,14 @@ const findBeerChosen = function(beers) {
 
 const createListItem = function(beer) {
   const mainList = document.getElementById('beer_details')
-  const listItem = document.createElement('li')
-  const beerDiv = document.createElement('div')
+  mainList.innerHTML = ''
 
-  const namePara = document.createElement('p')
+  const listItem  = document.createElement('li')
+  const beerDiv   = document.createElement('div')
+
+  const namePara  = document.createElement('p')
   const newImg    = document.createElement('img')
+  const breakline = document.createElement('br')
 
   namePara.innerText = beer.name
 
@@ -55,7 +58,80 @@ const createListItem = function(beer) {
   beerDiv.appendChild(newImg)
 
   listItem.appendChild(beerDiv)
+  listItem.appendChild(breakline)
   mainList.appendChild(listItem)
+
+  getIngredientNames(beer, mainList)
 }
+
+const getIngredientNames = function(beer, mainList) {
+  const hops = beer.ingredients.hops
+  const malt = beer.ingredients.malt
+  const yeast = beer.ingredients.yeast
+
+  const ingredients = {
+    hops: [],
+    malt: [],
+    yeast: [yeast]
+  }
+
+  hops.forEach(function(hop){
+    if(!ingredients.hops.includes(hop.name)){
+      ingredients.hops.push(hop.name)
+    }
+  })
+
+  malt.forEach(function(malt){
+    if(!ingredients.malt.includes(malt.name)){
+      ingredients.malt.push(malt.name)
+    }
+  })
+
+  console.log(ingredients);
+
+  populateIngredients(ingredients, mainList)
+
+}
+
+const populateIngredients = function(ingredients, list) {
+  const ingredientDivOuter = document.createElement('div')
+  ingredientDivOuter.innerHTML = ''
+  const ingredientDivPara = document.createElement('p')
+  const breakLine = document.createElement('br')
+
+  ingredientDivPara.innerText = 'Ingredients'
+  ingredientDivPara.classList.add('title')
+  ingredientDivOuter.appendChild(ingredientDivPara)
+
+  const ingredientDivInner = document.createElement('div')
+  ingredientDivInner.classList.add('ingredients')
+
+  createIngredientList(ingredientDivInner, ingredients.hops, 'Hops')
+  createIngredientList(ingredientDivInner, ingredients.yeast, 'Yeast')
+  createIngredientList(ingredientDivInner, ingredients.malt, 'Malt')
+
+  ingredientDivOuter.appendChild(ingredientDivInner)
+  list.insertAdjacentElement('afterend', ingredientDivOuter)
+}
+
+const createIngredientList = function(div, ingredients, type){
+  const newSubDiv   = document.createElement('div')
+  const newSubPara  = document.createElement('p')
+  const newList     = document.createElement('ul')
+
+  ingredients.forEach(function(name){
+    const newItem = document.createElement('li')
+    newItem.innerText = name
+    newList.appendChild(newItem)
+  })
+
+  newSubPara.innerText = type
+  newSubPara.classList.add('title')
+
+  newSubDiv.appendChild(newSubPara)
+  newSubDiv.appendChild(newList)
+  div.appendChild(newSubDiv)
+}
+
 
 document.addEventListener('DOMContentLoaded', onPageLoad);
